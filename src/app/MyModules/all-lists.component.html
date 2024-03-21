@@ -12,11 +12,11 @@
   </div>
 </div>
 
-<div *ngIf="loading" class="spinner-border text-primary" role="status">
+<div *ngIf="loading" class="spinner-border text-primary" id="loading" role="status">
   <span class="sr-only">Loading...</span>
 </div>
 
-<ng-container *ngIf="!loading && user && (user.tasksList.length>0)">
+<ng-container *ngIf="!loading && user && (user.tasksList.length>0); else userListEmpty">
   <div id="alltask">
     <div class="card column" id="todotask">
       <div class="card-title task-list-title" id="todo-title">ToDO Tasks</div>
@@ -74,6 +74,11 @@
   </div>
   
 </ng-container>
+
+<ng-template #userListEmpty>
+  <h3 class="text-center">User does not have tasks please add task first</h3>
+</ng-template>
+
   <!-- add task model -->
   <div
     class="modal fade"
@@ -130,8 +135,6 @@
               />
 
             <input type="hidden" formControlName="task_status_id" value=1 />
-
-            <input type="hidden" formControlName="task_status" [value]="" />
 
             <button
               mat-button

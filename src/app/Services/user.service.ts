@@ -8,7 +8,7 @@ import { Tasks } from '../models/tasks';
   providedIn: 'root'
 })
 
-export class UserServiceService {
+export class UserService {
 
 
   constructor(private http : HttpClient) {}
@@ -17,8 +17,6 @@ export class UserServiceService {
 
    return  this.http.get<User[]>('https://localhost:7282/ToDo/users')
     .pipe(
-
-     // tap(data=> { console.log("filtered users: "+JSON.stringify(data)); }),
       catchError((err)=>{
         throw err;
       })
@@ -26,7 +24,6 @@ export class UserServiceService {
    }
 
    public async getAllUserTasks(id:number): Promise<Observable<Tasks[]>> {
-    
     return  this.http.get<Tasks[]>('https://localhost:7282/ToDo/tasks/'+id)
      .pipe(
        tap(data=> {   
@@ -36,12 +33,9 @@ export class UserServiceService {
          throw err;
        })
      );
- 
     }
 
-
    public  async getUserWithTasks(id:number): Promise<Observable<User>> {
-
       return  this.http.get<User>('https://localhost:7282/ToDo/userwithtasks/'+id)
        .pipe(
          tap(data=> {   
@@ -51,40 +45,33 @@ export class UserServiceService {
            throw err;
          })
        );
-   
       }
 
-      
-
       public   addTask(task: any):Observable<any> {
-        
         return   this.http.post('https://localhost:7282/ToDo/task/', task);
-        
         }
 
      public addUser(user:any):Observable<any>{
-        return this.http.post("https://localhost:7282/ToDo/user/",user);
+      let response = this.http.post("https://localhost:7282/ToDo/user/",user);
+        this.notifySubject.next();
+        return response;
      }
 
      public deleteTask(taskId:number):Observable<any>{
       return this.http.delete("https://localhost:7282/ToDo/task/"+taskId);
-   }
+     }
 
-
-   private userDeletedSubject = new Subject<void>();
-
-   userDeleted$ = this.userDeletedSubject.asObservable();
+   private notifySubject = new Subject<void>();
+   notify$ = this.notifySubject.asObservable();
 
    public deleteUser(userId:number):Observable<any>{
       let response = this.http.delete("https://localhost:7282/ToDo/user?userId="+userId);
-      this.userDeletedSubject.next();
+      this.notifySubject.next();
       return response;
    }
-
 
    updateTaskStatus(taskId:number,updatedTaskStatus:number){
     let response= this.http.put("https://localhost:7282/ToDo/task/"+taskId+"?updatedStatus="+updatedTaskStatus,null);
     return response;           
    }
-
 }

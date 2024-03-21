@@ -1,5 +1,5 @@
 
-<div *ngIf="loading" class="spinner-border text-primary" role="status">
+<div *ngIf="loading" class="spinner-border text-primary" id="loading" role="status">
   <span class="sr-only">Loading...</span>
 </div>
 <div
@@ -12,15 +12,15 @@
   </div>
 <ul *ngIf="!loading && userList.length>0" id="user-list">
   
-  <li *ngFor="let user of userList; let i = index">
-    <div *ngIf="user.user_type_id != 1; else AdminHere">
+  <li *ngFor="let user of userList; let i = index" >
+    <div *ngIf="user.user_type_id != 1; else AdminHere" id="user-container">
       <a [routerLink]="['user', user.user_id]">
         <div><span>{{i}}.   </span>{{ user.user_name }}</div>
       </a>
     </div>
     <ng-template #AdminHere>
       <a routerLink="admin">
-        <div>{{ user.user_name }}   <span class="admin-lable-btn ">Admin</span></div>
+        <div>{{ user.user_name }}   <span class="admin-lable-btn" >Admin</span></div>
       </a>
     </ng-template>
   </li>
@@ -66,25 +66,24 @@
 
           <br />
 
+          <!-- <mat-form-field class="ml-2">
+            <mat-select placeholder=" Select User Type" style="z-index: 200;">
+            <mat-option [value]="1" style="z-index: 200;">User</mat-option>
+            <mat-option [value]="2" style="z-index: 200;">Admin</mat-option>
+          </mat-select>
+          </mat-form-field> -->
           <label>Select Role : </label>
           <select type="number" formControlName="user_type_id">
             <option [value]="1">Admin</option>
             <option [value]="2">User</option>
           </select>
 
-          <!-- <input
-            style="display: none"
-            matInput
-            name="task_status_id"
-            type="number"
-            [value]="1"
-            formControlName="task_status_id"
-          /> -->
+
 
           <button
             mat-button
             color="primary"
-            class="container text-center"
+            class="container text-center mt-3"
             data-bs-dismiss="modal"
             type="submit"
           >

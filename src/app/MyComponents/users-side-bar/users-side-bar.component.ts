@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserServiceService } from '../../Services/user-service.service';
+import { UserService } from '../../Services/user.service';
 import { Observable } from 'rxjs';
 import { User } from '../../models/user';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -13,7 +13,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class UsersSideBarComponent implements OnInit{
 
 
-  constructor(private _userService:UserServiceService ){}
+  constructor(private _userService:UserService ){}
 
   userList :User[]=[];
   loading:boolean=true;
@@ -26,30 +26,33 @@ export class UsersSideBarComponent implements OnInit{
       user_type_id:  new FormControl(null,[Validators.required])
     });
 
+     
      await  this.getAllUserList();
 
-     this._userService.userDeleted$.subscribe(() => {
-      this.getAllUserList(); 
+     this._userService.notify$.subscribe(() => {
+        this.userList=[];
+        this.getAllUserList(); 
     });
-
   }
 
   getAllUserList(){
+      this.userList=[];
       setTimeout(()=>{
              this.userList=[];
-    this._userService.getAllUserList().subscribe(
-      (data: User[]) => {
+             this._userService.getAllUserList().subscribe(
+              (data: User[]) => {
               
                 for(let user of data){
                   this.userList.push(user);
                 } 
                 this.loading=false;
-      },
-     (error) => {
-          console.error('Error fetching users:', error);
-      });
-    },100);
+              },
+            (error) => {
+               console.error('Error fetching users:', error);
+            });
+      },100);
    }
+
 
   async submitAddUserForm(){
 
@@ -66,8 +69,6 @@ export class UsersSideBarComponent implements OnInit{
           alert(error.error);
         }
       )
-
-     await this.getAllUserList();
 
      await this.addUserForm.reset();
   }

@@ -3,6 +3,11 @@
     width: 80%;
 }
 
+#loading{
+  margin-left:50%;
+  margin-top: 50%;
+}
+
 #user-list{
      display: flex;
      flex-direction: column;
@@ -10,6 +15,15 @@
      justify-content: center;
 }
 
+.admin-lable-btn{
+  color:white; 
+  background-color: rgb(134, 80, 185);
+  border-radius: 4px;
+}
+
+#user-container{
+  overflow: hidden;
+}
 
 ul {
     list-style-type: none;
@@ -55,12 +69,16 @@ ul {
     text-overflow: ellipsis; /* Show ellipsis (...) for long text */
   }
   
-  .user-box:hover {
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Example box shadow on hover */
-  }
+  // .user-box:hover {
+  //   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Example box shadow on hover */
+  // }
 
   .admin-lable-btn{
     
     height: 20px;
     width: 40px;
-  }
+ }
+
+
+
+  

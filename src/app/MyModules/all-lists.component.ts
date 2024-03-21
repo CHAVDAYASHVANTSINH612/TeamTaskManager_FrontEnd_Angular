@@ -1,5 +1,5 @@
 import { AfterContentChecked, AfterViewChecked, Component, DoCheck, OnInit } from '@angular/core';
-import { UserServiceService } from '../Services/user-service.service';
+import { UserService} from '../Services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Tasks } from '../models/tasks';
 import { Subscription, pipe, switchMap } from 'rxjs';
@@ -14,56 +14,41 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 export class AllListsComponent  {
 
-
-  constructor(private _userService:UserServiceService,private route: ActivatedRoute){}
+  constructor(private _userService:UserService,private route: ActivatedRoute){}
   id!: number;  
   private routeSub!: Subscription;
-
   addTaskForm!: FormGroup; 
   allTaskList : Tasks[]=[] ; 
   ToDoTaskList: Tasks[]=[];
   InProgressTaskList: Tasks[]=[];
   DoneTaskList: Tasks[]=[];
-
   loading:boolean=true;
   user!:User;
 
    async ngOnInit():Promise<void>{
-      
-      //console.log( this.route.snapshot.params['id']);
 
      this.routeSub = await this.route.params.subscribe( async params => {
-
             this.id = parseInt(params['id']);
-          
             await this.localGetUserWithTask();
-
             if(this.addTaskForm!==undefined){
               this.addTaskForm.reset();
             }
 
             this.addTaskForm = new FormGroup({
-
               task_title: new FormControl(null,[Validators.required]),
              task_content: new FormControl(null),
              task_status_id: new FormControl(1,[Validators.required]),
              task_user_id: new FormControl(this.id,[Validators.required]),
              task_status: new FormControl(""),
-      
              });
        });  
-       
-       this.addTaskForm = new FormGroup({
 
+       this.addTaskForm = new FormGroup({
         task_title: new FormControl(null,[Validators.required]),
        task_content: new FormControl(null),
        task_status_id: new FormControl(1,[Validators.required]),
-       task_user_id: new FormControl(this.id,[Validators.required]),
-       task_status: new FormControl(""),
-
+       task_user_id: new FormControl(this.id,[Validators.required])
        });
-       
-   
     }
 
     ngOnDestroy(): void {
@@ -81,26 +66,19 @@ export class AllListsComponent  {
         },
         (error) => {
           console.error('Error adding task:', error);
-         
         }
       )
-
-     // this._userService.notifyAdded();
      await this.localGetUserWithTask();
-
     }
 
-
     async localGetUserWithTask(){
-
       setTimeout(async ()=>{
                 this.allTaskList=[];
                 this.ToDoTaskList=[];
                 this.InProgressTaskList=[];
                 this.DoneTaskList=[];
       (await this._userService.getUserWithTasks(this.id)).subscribe( (data:User)=>{
-        try{
-         
+      try{
        for(let task of data.tasksList ){
          this.allTaskList.push(task);
          if(task.task_status_id===1){
@@ -117,8 +95,6 @@ export class AllListsComponent  {
       this.loading=false;  
        
       console.log(this.user);
-
-      
      } 
      catch (error) 
       {
@@ -127,22 +103,16 @@ export class AllListsComponent  {
       }
     });
 
- 
-
   },1000);
-
-    }
+ }
 
     deleteTask(taskId:number){
-
       this._userService.deleteTask(taskId).subscribe(
         (result)=>{console.log("user deleteed : "+result)},
         (error)=>{console.log("Error deleting User : "+error)}
       )
-      
       this.localGetUserWithTask();
     }
-
 
     localUpdateTaskStatus(taskId:number,updatedStatusId:number){
          this._userService.updateTaskStatus(taskId,updatedStatusId).subscribe(

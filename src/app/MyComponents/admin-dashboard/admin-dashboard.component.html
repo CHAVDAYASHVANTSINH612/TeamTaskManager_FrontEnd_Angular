@@ -1,14 +1,10 @@
 
-
-<div *ngIf="loading" class="spinner-border text-primary" role="status">
-  <span class="sr-only">Loading...</span>
-</div>
-
+<h2 class="card-header mt-4"> User List</h2>
+       <div *ngIf="loading" class="spinner-border text-primary" id="loading" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
 <ng-container *ngIf=" userList!==undefined">
-
   <div id="content">
-       <h2 class="card-header"> User List</h2>
-       
         <div *ngFor="let user of userList"  class="card-item">
               <div class="card"  *ngIf="user.user_type_id!==1">
               {{user.user_name}}
@@ -18,8 +14,4 @@
   </div>
 
 </ng-container>
-<ng-container *ngIf="userList==undefined">
-  <h2 class="card-header"> User List is Empty</h2>
-</ng-container>
-
 
