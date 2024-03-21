@@ -1,0 +1,159 @@
+<div id="row1">
+  <ng-container *ngIf="user != null || user != undefined">
+    <h3> User name : {{ user.user_name }}</h3>
+  </ng-container>
+  <div
+    class="btn btn-primary"
+    id="add-task-btn"
+    data-bs-toggle="modal"
+    data-bs-target="#add-task-modal"
+  >
+    + addTask
+  </div>
+</div>
+
+<div *ngIf="loading" class="spinner-border text-primary" role="status">
+  <span class="sr-only">Loading...</span>
+</div>
+
+<ng-container *ngIf="!loading && user && (user.tasksList.length>0)">
+  <div id="alltask">
+    <div class="card column" id="todotask">
+      <div class="card-title task-list-title" id="todo-title">ToDO Tasks</div>
+      <div *ngFor="let task of ToDoTaskList; index as i" id="todotasks">
+        <div class="card-item task position-relative">
+          <div class="task-title">{{ task.task_title }}</div>
+          <div class="task-content">{{ task.task_content }}</div>
+          <br /><br />
+          <div class="position-absolute bottom-0 end-0">
+            <div class="btn btn-success" id="move-btn" (click)="localUpdateTaskStatus(task.task_id,2)" value="2">&#x2192;</div>
+          </div>
+          <div class="position-absolute bottom-0" style="left:50%">
+            <i class="fa fa-trash" aria-hidden="true" (click)="deleteTask(task.task_id)"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card column" id="inprogresstask">
+      <div class="card-title task-list-title" id="inprogress-title">InProgress Tasks</div>
+      <div
+        *ngFor="let task of InProgressTaskList; index as i"
+        id="inprogresstasks"
+      >
+        <div class="card-item task position-relative">
+          <div class="task-title">{{ task.task_title }}</div>
+          <div class="task-content">{{ task.task_content }}</div>
+          <br /><br />
+          <div class="position-absolute bottom-0 start-0">
+            <div class="btn btn-success" id="move-btn" (click)="localUpdateTaskStatus(task.task_id,1)" >&#x2190;</div>
+          </div>
+          <div class="position-absolute bottom-0 end-0">
+            <div class="btn btn-success" id="move-btn" (click)="localUpdateTaskStatus(task.task_id,3)">&#x2192;</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card column" id="inprogresstask">
+      <div class="card-title task-list-title" id="done-title">Done Tasks</div>
+      <div *ngFor="let task of DoneTaskList; index as i" id="donetasks">
+        <div class="card-item task position-relative">
+          <div class="task-title">{{ task.task_title }}</div>
+          <div class="task-content">{{ task.task_content }}</div>
+          <br /><br />
+          <div class="position-absolute bottom-0 start-0">
+            <div class="btn btn-success" id="move-btn" (click)="localUpdateTaskStatus(task.task_id,2)">&#x2190;</div>
+          </div>
+          <div class="position-absolute bottom-0 " style="left:50%">
+            <i class="fa fa-trash" aria-hidden="true" (click)="deleteTask(task.task_id)"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</ng-container>
+  <!-- add task model -->
+  <div
+    class="modal fade"
+    id="add-task-modal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Fill Task Details</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="addTaskForm" (ngSubmit)="submitAddTaskForm()"  id="myForm">
+            <mat-form-field class="container text-center" appearance="fill">
+              <mat-label>Task Title</mat-label>
+              <input
+                matInput
+                placeholder="Enter task title"
+                formControlName="task_title"
+              />
+              <mat-error
+                style="color: red"
+                *ngIf="
+                  addTaskForm.get('task_title')?.invalid &&
+                  addTaskForm.get('task_title')?.touched
+                "
+                >invalid! task Title should not be empty</mat-error
+              >
+            </mat-form-field>
+
+            <br />
+
+            <mat-form-field class="container text-center" appearance="fill">
+              <mat-label>Task Content</mat-label>
+              <textarea
+                matInput
+                placeholder="Enter task content"
+                formControlName="task_content"
+              ></textarea>
+            </mat-form-field>
+
+            
+              <input
+                type="hidden"
+                formControlName="task_user_id"
+              />
+
+            <input type="hidden" formControlName="task_status_id" value=1 />
+
+            <input type="hidden" formControlName="task_status" [value]="" />
+
+            <button
+              mat-button
+              color="primary"
+              class="container text-center"
+              type="submit"
+              data-bs-dismiss="modal"
+            >
+              Submit
+            </button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+

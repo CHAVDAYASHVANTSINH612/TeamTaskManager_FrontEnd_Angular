@@ -1,0 +1,66 @@
+#add-task-btn{
+    margin: 10px;
+    width: 80%;
+}
+
+#user-list{
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     justify-content: center;
+}
+
+
+ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #f8f9fa; /* Example background color */
+    border: 1px solid #ccc; /* Border color */
+    border-radius: 5px;
+    width: 70%;
+    height: 10%;
+    margin: 2%;
+  }
+
+  li:hover{
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  a {
+    text-decoration: none;
+    color: #007bff; /* Example link color */
+    transition: color 0.3s ease;
+  }
+  
+  a:hover {
+    color: #0056b3; /* Example link color on hover */
+    cursor: pointer;
+  }
+  
+  .user-box {
+    padding: 10px;
+    background-color: #f8f9fa; /* Example background color */
+    border: 1px solid #ccc; /* Border color */
+    border-radius: 5px;
+    display: block;
+    overflow: hidden; /* Prevent content from overflowing */
+    white-space: nowrap; /* Prevent text wrapping */
+    text-overflow: ellipsis; /* Show ellipsis (...) for long text */
+  }
+  
+  .user-box:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Example box shadow on hover */
+  }
+
+  .admin-lable-btn{
+    
+    height: 20px;
+    width: 40px;
+  }

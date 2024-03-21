@@ -1,0 +1,88 @@
+
+// #user-side-bar{
+//   // border:2px solid red;
+//    box-shadow: 0px 0px 6px rgb(130, 104, 104) ;
+//    width:20vw;
+//    border-radius: 0px 0px 12px 12px;
+   
+// }
+// #user-side-bar:hover{
+//    box-shadow: 0px 0px 12px black ;
+// }
+
+// #side-and-lists{
+//    display: flex;
+//    flex-direction: row;
+// }
+
+
+// #listsORAdminComponent{
+
+//    box-shadow: 0px 0px 6px rgb(130, 104, 104) ;
+// width:80vw;
+// align-items: center;
+// justify-content: center;
+// border-radius: 0px 0px 12px 12px;
+// }
+
+// #listsORAdminComponent:hover{
+//    box-shadow: 0px 0px 12px black ;
+// }
+
+
+// .footer-container {
+//    margin-top: auto; /* Push the footer to the bottom */
+//  }
+
+// footer {
+//    text-align: center;
+//    padding: 10px 0;
+//    background-color: #333;
+//    color: #fff;
+//    margin-top: auto; /* Push the footer to the bottom */
+//  }
+
+#user-side-bar {
+   box-shadow: 0px 0px 6px rgb(130, 104, 104);
+   width: 20vw;
+   border-radius: 0px 0px 12px 12px;
+   /* Other styles for the user side bar */
+ }
+ 
+ #user-side-bar:hover {
+   box-shadow: 0px 0px 12px black;
+ }
+ 
+ #side-and-lists {
+   display: flex;
+   flex-direction: row;
+ }
+ 
+ #listsORAdminComponent {
+   box-shadow: 0px 0px 6px rgb(130, 104, 104);
+   width: 80vw;
+   align-items: center;
+   justify-content: center;
+   border-radius: 0px 0px 12px 12px;
+   /* Other styles for the main content */
+ }
+ 
+ #listsORAdminComponent:hover {
+   box-shadow: 0px 0px 12px black;
+ }
+ 
+ .footer-container {
+   display: flex;
+   flex-direction: column;
+   min-height: 100vh; /* Ensure the container takes up at least the full viewport height */
+   margin-top: auto; /* Push the footer to the bottom */
+ }
+ 
+ footer {
+   text-align: center;
+   padding: 10px 0;
+   background-color: #333;
+   color: #fff;
+ }
+ 
+ 

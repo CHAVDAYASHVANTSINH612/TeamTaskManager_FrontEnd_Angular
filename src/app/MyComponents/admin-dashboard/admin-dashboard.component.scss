@@ -1,0 +1,43 @@
+
+
+#content {
+    max-width: 600px; /* Adjust max-width as needed */
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .card-header {
+    background-color: #007bff; /* Example color */
+    color: #fff; /* Text color */
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    text-align: center;
+  }
+  
+  .card-item {
+    margin-bottom: 10px;
+  }
+  
+  .card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #f8f9fa; /* Example background color */
+    border: 1px solid #ccc; /* Border color */
+    border-radius: 5px;
+  }
+  
+  .card:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Example box shadow on hover */
+  }
+  
+  .delete-user-btn {
+    cursor: pointer;
+    color: red; /* Color for the trash icon */
+  }
+  
+  .end-0 {
+    margin-left: auto; /* Push the trash icon to the right */
+  }
