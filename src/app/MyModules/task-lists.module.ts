@@ -6,6 +6,8 @@ import { FormGroup, FormsModule ,ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { AddTaskDialogComponent } from './add-task-dialog/add-task-dialog.component';
+import { MatDialog, MatDialogActions, MatDialogModule } from '@angular/material/dialog';
 
 const routes: Routes = [
   {
@@ -16,7 +18,8 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-     AllListsComponent
+     AllListsComponent,
+     AddTaskDialogComponent
      
   ],
   imports: [
@@ -27,7 +30,9 @@ const routes: Routes = [
     MatFormFieldModule,
     MatButtonModule,
     MatFormFieldModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatDialogModule,
+    MatDialogActions
   ]
 })
 export class TaskListsModule { }

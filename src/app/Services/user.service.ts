@@ -3,19 +3,17 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, Subject, catchError, map, take, tap } from 'rxjs';
 import {User} from '../models/user'
 import { Tasks } from '../models/tasks';
+import { environment } from '../../../environment';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class UserService {
-
-
   constructor(private http : HttpClient) {}
+  public getAllUserList(): Observable<User[]> {
 
-   public getAllUserList(): Observable<User[]> {
-
-   return  this.http.get<User[]>('https://localhost:7282/ToDo/users')
+  return  this.http.get<User[]>(environment.API_URL+"/ToDo/users")
     .pipe(
       catchError((err)=>{
         throw err;
@@ -23,8 +21,8 @@ export class UserService {
     );
    }
 
-   public async getAllUserTasks(id:number): Promise<Observable<Tasks[]>> {
-    return  this.http.get<Tasks[]>('https://localhost:7282/ToDo/tasks/'+id)
+  public async getAllUserTasks(id:number): Promise<Observable<Tasks[]>> {
+    return  this.http.get<Tasks[]>(environment.API_URL+"/ToDo/tasks/"+id)
      .pipe(
        tap(data=> {   
         console.log("tasks of user "+id+" : "+JSON.stringify(data)); 
@@ -35,8 +33,8 @@ export class UserService {
      );
     }
 
-   public  async getUserWithTasks(id:number): Promise<Observable<User>> {
-      return  this.http.get<User>('https://localhost:7282/ToDo/userwithtasks/'+id)
+  public  async getUserWithTasks(id:number): Promise<Observable<User>> {
+      return  this.http.get<User>(environment.API_URL+"/ToDo/userwithtasks/"+id)
        .pipe(
          tap(data=> {   
           console.log("tasks of user "+id+" : "+JSON.stringify(data)); 
@@ -45,33 +43,35 @@ export class UserService {
            throw err;
          })
        );
-      }
+  }
 
-      public   addTask(task: any):Observable<any> {
-        return   this.http.post('https://localhost:7282/ToDo/task/', task);
-        }
-
-     public addUser(user:any):Observable<any>{
-      let response = this.http.post("https://localhost:7282/ToDo/user/",user);
+  public   addTask(task: any):Observable<any> {
+        let response=  this.http.post( environment.API_URL+"/ToDo/task/", task);
         this.notifySubject.next();
         return response;
-     }
+  }
 
-     public deleteTask(taskId:number):Observable<any>{
-      return this.http.delete("https://localhost:7282/ToDo/task/"+taskId);
-     }
+  public addUser(user:any):Observable<any>{
+      let response = this.http.post(environment.API_URL+"/ToDo/user/",user);
+        this.notifySubject.next();
+        return response;
+  }
+
+  public deleteTask(taskId:number):Observable<any>{
+      return this.http.delete(environment.API_URL+"/ToDo/task/"+taskId);
+  }
 
    private notifySubject = new Subject<void>();
    notify$ = this.notifySubject.asObservable();
 
    public deleteUser(userId:number):Observable<any>{
-      let response = this.http.delete("https://localhost:7282/ToDo/user?userId="+userId);
+      let response = this.http.delete(environment.API_URL+"/ToDo/user?userId="+userId);
       this.notifySubject.next();
       return response;
    }
 
    updateTaskStatus(taskId:number,updatedTaskStatus:number){
-    let response= this.http.put("https://localhost:7282/ToDo/task/"+taskId+"?updatedStatus="+updatedTaskStatus,null);
+    let response= this.http.put(environment.API_URL+"/ToDo/task/"+taskId+"?updatedStatus="+updatedTaskStatus,null);
     return response;           
    }
 }

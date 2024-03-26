@@ -1,0 +1,32 @@
+<h1 mat-dialog-title>Add User</h1>
+<form [formGroup]="addUserForm" (ngSubmit)="onSubmit()">
+  <mat-form-field>
+    <input matInput placeholder="User Name" formControlName="user_name" />
+    <mat-error *ngIf="addUserForm.controls['user_name'].hasError('required')"
+      >User Name is required</mat-error
+    >
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>User Type</mat-label>
+    <mat-select formControlName="user_type_id">
+      <mat-option value="1">Admin</mat-option>
+      <mat-option value="2">User</mat-option>
+    </mat-select>
+    <mat-error *ngIf="addUserForm.controls['user_type_id'].hasError('required')"
+      >User Type is required</mat-error
+    >
+  </mat-form-field>
+
+  <mat-dialog-actions>
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button
+      mat-button
+      color="primary"
+      type="submit"
+      [disabled]="addUserForm.invalid"
+      id="add-user-btn"
+    >
+      Add User
+    </button>
+  </mat-dialog-actions>
+</form>

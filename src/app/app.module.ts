@@ -19,6 +19,8 @@ import { MatInputModule } from '@angular/material/input';
 import { TaskListsModule } from './MyModules/task-lists.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // Required for animations
 import { MatSelectModule } from '@angular/material/select';
+import { AddUserDialogComponent } from './MyComponents/users-side-bar/add-user-dialog/add-user-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,7 @@ import { MatSelectModule } from '@angular/material/select';
     AdminDashboardComponent,
     HomeWelcomeComponent,
     NotFoundPageComponent,
+    AddUserDialogComponent,
     
   ],
   imports: [
@@ -43,7 +46,7 @@ import { MatSelectModule } from '@angular/material/select';
      MatFormFieldModule,
      BrowserAnimationsModule,
      MatSelectModule,
-    
+     MatDialogModule
   ],
   providers: [UserService, provideAnimationsAsync()],
   bootstrap: [AppComponent]

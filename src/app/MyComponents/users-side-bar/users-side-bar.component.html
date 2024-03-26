@@ -1,101 +1,30 @@
+<div class="btn btn-primary" id="add-task-btn" (click)="openAddUserDialog()">
+  + addUser
+</div>
 
-<div *ngIf="loading" class="spinner-border text-primary" id="loading" role="status">
+<div
+  *ngIf="loading"
+  class="spinner-border text-primary"
+  id="loading"
+  role="status"
+>
   <span class="sr-only">Loading...</span>
 </div>
-<div
-    class="btn btn-primary"
-    id="add-task-btn"
-    data-bs-toggle="modal"
-    data-bs-target="#add-user-modal"
-  >
-    + addUser
-  </div>
-<ul *ngIf="!loading && userList.length>0" id="user-list">
-  
-  <li *ngFor="let user of userList; let i = index" >
+<ul *ngIf="!loading && userList.length > 0" id="user-list">
+  <li *ngFor="let user of userList; let i = index">
     <div *ngIf="user.user_type_id != 1; else AdminHere" id="user-container">
       <a [routerLink]="['user', user.user_id]">
-        <div><span>{{i}}.   </span>{{ user.user_name }}</div>
+        <div>
+          <span>{{ i }}. </span>{{ user.user_name }}
+        </div>
       </a>
     </div>
     <ng-template #AdminHere>
       <a routerLink="admin">
-        <div>{{ user.user_name }}   <span class="admin-lable-btn" >Admin</span></div>
+        <div>
+          {{ user.user_name }} <span class="admin-lable-btn">Admin</span>
+        </div>
       </a>
     </ng-template>
   </li>
 </ul>
-
-<!-- add user modal -->
-<div
-  class="modal fade"
-  id="add-user-modal"
-  tabindex="-1"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Fill Task Details</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
-      </div>
-      <div class="modal-body">
-        <form [formGroup]="addUserForm" (ngSubmit)="submitAddUserForm()">
-          <mat-form-field class="container text-center" appearance="fill">
-            <mat-label>User Name</mat-label>
-            <input
-              matInput
-              placeholder="Enter  User name"
-              formControlName="user_name"
-            />
-            <mat-error
-              style="color: red"
-              *ngIf="
-                addUserForm.get('user_name')?.invalid &&
-                addUserForm.get('user_name')?.touched
-              "
-              >invalid! User Name should not be empty</mat-error
-            >
-          </mat-form-field>
-
-          <br />
-
-          <!-- <mat-form-field class="ml-2">
-            <mat-select placeholder=" Select User Type" style="z-index: 200;">
-            <mat-option [value]="1" style="z-index: 200;">User</mat-option>
-            <mat-option [value]="2" style="z-index: 200;">Admin</mat-option>
-          </mat-select>
-          </mat-form-field> -->
-          <label>Select Role : </label>
-          <select type="number" formControlName="user_type_id">
-            <option [value]="1">Admin</option>
-            <option [value]="2">User</option>
-          </select>
-
-
-
-          <button
-            mat-button
-            color="primary"
-            class="container text-center mt-3"
-            data-bs-dismiss="modal"
-            type="submit"
-          >
-            Submit
-          </button>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          Close
-        </button>
-      </div>
-    </div>
-  </div>
-</div>

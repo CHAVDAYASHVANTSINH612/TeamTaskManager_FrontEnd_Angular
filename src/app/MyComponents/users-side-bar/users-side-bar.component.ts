@@ -3,6 +3,8 @@ import { UserService } from '../../Services/user.service';
 import { Observable } from 'rxjs';
 import { User } from '../../models/user';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { AddUserDialogComponent } from './add-user-dialog/add-user-dialog.component';
 
 @Component({
   selector: 'app-users-side-bar',
@@ -12,23 +14,14 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 export class UsersSideBarComponent implements OnInit{
 
-
-  constructor(private _userService:UserService ){}
+  constructor(private _userService:UserService, private dialog:MatDialog ){}
 
   userList :User[]=[];
   loading:boolean=true;
   addUserForm!:FormGroup;
   
   async ngOnInit(): Promise<void> {
-
-    this.addUserForm= new FormGroup({
-      user_name: new FormControl(null,[Validators.required]),
-      user_type_id:  new FormControl(null,[Validators.required])
-    });
-
-     
      await  this.getAllUserList();
-
      this._userService.notify$.subscribe(() => {
         this.userList=[];
         this.getAllUserList(); 
@@ -49,28 +42,19 @@ export class UsersSideBarComponent implements OnInit{
               },
             (error) => {
                console.error('Error fetching users:', error);
+               this.loading=false;
             });
       },100);
    }
 
-
-  async submitAddUserForm(){
-
-      console.log(this.addUserForm.value);
-
-      
-     await this._userService.addUser(this.addUserForm.value).subscribe(
-        () => {
-          console.log('added User:');
-         
-        },
-        (error) => {
-          console.error('Error adding User:', error);
-          alert(error.error);
-        }
-      )
-
-     await this.addUserForm.reset();
+   openAddUserDialog(): void {
+    const dialogRef = this.dialog.open(AddUserDialogComponent, {
+      width: '400px'
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed', result);
+    });
   }
 
 }
