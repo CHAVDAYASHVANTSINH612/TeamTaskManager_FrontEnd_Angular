@@ -35,14 +35,16 @@
   }
   
   .card:hover {
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Example box shadow on hover */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
   }
   
   .delete-user-btn {
     cursor: pointer;
-    color: red; /* Color for the trash icon */
+    color: red; 
+    font-size: 35px;
+
   }
   
   .end-0 {
-    margin-left: auto; /* Push the trash icon to the right */
+    margin-left: auto; 
   }
