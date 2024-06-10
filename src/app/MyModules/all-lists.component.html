@@ -1,6 +1,6 @@
 <div id="row1">
   <ng-container *ngIf="user != null || user != undefined">
-    <h3>User name : {{ user.user_name }}</h3>
+    <h3>User name : {{ user.name }}</h3>
   </ng-container>
   <div class="btn btn-primary" id="add-task-btn" (click)="openAddTaskDialog()">
     + addTask
@@ -10,16 +10,11 @@
   </ng-template>
 </div>
 
-<div
-  *ngIf="loading"
-  class="spinner-border text-primary"
-  id="loading"
-  role="status"
->
+<div *ngIf="loading" class="spinner-border text-primary" id="loading" role="status">
   <span class="sr-only">Loading...</span>
 </div>
 
-<ng-container *ngIf="!loading && user && user.tasksList.length > 0">
+<ng-container *ngIf="!loading && user && user.taskList.length > 0">
   <div id="alltask">
     <div class="card column" id="todotask">
       <div class="card-title task-list-title text-center" id="todo-title">
@@ -27,25 +22,16 @@
       </div>
       <div *ngFor="let task of ToDoTaskList; index as i" id="todotasks">
         <div class="card-item task position-relative">
-          <div class="task-title text-center">{{ task.task_title }}</div>
-          <div class="task-content">{{ task.task_content }}</div>
+          <div class="task-title text-center">{{ task.title }}</div>
+          <div class="task-content">{{ task.content }}</div>
           <br /><br />
           <div class="position-absolute bottom-0 end-0">
-            <div
-              class="btn btn-success"
-              id="move-btn"
-              (click)="localUpdateTaskStatus(task.task_id, 2)"
-              value="2"
-            >
+            <div class="btn btn-success" id="move-btn" (click)="localUpdateTaskStatus(task.id, 2)" value="2">
               &#x2192;
             </div>
           </div>
           <div class="position-absolute bottom-0" style="left: 50%">
-            <i
-              class="fa fa-trash"
-              aria-hidden="true"
-              (click)="deleteTask(task.task_id)"
-            ></i>
+            <i class="fa fa-trash" aria-hidden="true" (click)="deleteTask(task.id)"></i>
           </div>
         </div>
       </div>
@@ -55,29 +41,18 @@
       <div class="card-title task-list-title text-center" id="inprogress-title">
         InProgress Tasks
       </div>
-      <div
-        *ngFor="let task of InProgressTaskList; index as i"
-        id="inprogresstasks"
-      >
+      <div *ngFor="let task of InProgressTaskList; index as i" id="inprogresstasks">
         <div class="card-item task position-relative">
-          <div class="task-title text-center">{{ task.task_title }}</div>
-          <div class="task-content">{{ task.task_content }}</div>
+          <div class="task-title text-center">{{ task.title }}</div>
+          <div class="task-content">{{ task.content }}</div>
           <br /><br />
           <div class="position-absolute bottom-0 start-0">
-            <div
-              class="btn btn-success"
-              id="move-btn"
-              (click)="localUpdateTaskStatus(task.task_id, 1)"
-            >
+            <div class="btn btn-success" id="move-btn" (click)="localUpdateTaskStatus(task.id, 1)">
               &#x2190;
             </div>
           </div>
           <div class="position-absolute bottom-0 end-0">
-            <div
-              class="btn btn-success"
-              id="move-btn"
-              (click)="localUpdateTaskStatus(task.task_id, 3)"
-            >
+            <div class="btn btn-success" id="move-btn" (click)="localUpdateTaskStatus(task.id, 3)">
               &#x2192;
             </div>
           </div>
@@ -91,24 +66,16 @@
       </div>
       <div *ngFor="let task of DoneTaskList; index as i" id="donetasks">
         <div class="card-item task position-relative">
-          <div class="task-title text-center">{{ task.task_title }}</div>
-          <div class="task-content">{{ task.task_content }}</div>
+          <div class="task-title text-center">{{ task.title }}</div>
+          <div class="task-content">{{ task.content }}</div>
           <br /><br />
           <div class="position-absolute bottom-0 start-0">
-            <div
-              class="btn btn-success"
-              id="move-btn"
-              (click)="localUpdateTaskStatus(task.task_id, 2)"
-            >
+            <div class="btn btn-success" id="move-btn" (click)="localUpdateTaskStatus(task.id, 2)">
               &#x2190;
             </div>
           </div>
           <div class="position-absolute bottom-0" style="left: 50%">
-            <i
-              class="fa fa-trash"
-              aria-hidden="true"
-              (click)="deleteTask(task.task_id)"
-            ></i>
+            <i class="fa fa-trash" aria-hidden="true" (click)="deleteTask(task.id)"></i>
           </div>
         </div>
       </div>
@@ -116,6 +83,6 @@
   </div>
 </ng-container>
 
-<ng-container *ngIf="!loading && user && user.tasksList.length == 0">
+<ng-container *ngIf="!loading && user &&  user.taskList.length == 0">
   <h2 class="text-center">User does not have any Task yet please add Task</h2>
 </ng-container>

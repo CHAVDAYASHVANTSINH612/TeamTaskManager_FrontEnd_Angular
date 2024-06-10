@@ -11,9 +11,11 @@ import { environment } from '../../../environment';
 
 export class UserService {
   constructor(private http : HttpClient) {}
+
+  
   public getAllUserList(): Observable<User[]> {
 
-  return  this.http.get<User[]>(environment.API_URL+"/ToDo/users")
+  return  this.http.get<User[]>(environment.API_URL+"/users")
     .pipe(
       catchError((err)=>{
         throw err;
@@ -22,7 +24,7 @@ export class UserService {
    }
 
   public async getAllUserTasks(id:number): Promise<Observable<Tasks[]>> {
-    return  this.http.get<Tasks[]>(environment.API_URL+"/ToDo/tasks/"+id)
+    return  this.http.get<Tasks[]>(environment.API_URL+"/tasks/"+id)
      .pipe(
        tap(data=> {   
         console.log("tasks of user "+id+" : "+JSON.stringify(data)); 
@@ -34,10 +36,10 @@ export class UserService {
     }
 
   public  async getUserWithTasks(id:number): Promise<Observable<User>> {
-      return  this.http.get<User>(environment.API_URL+"/ToDo/userwithtasks/"+id)
+      return  this.http.get<User>(environment.API_URL+"/userwithtasks/"+id)
        .pipe(
          tap(data=> {   
-          console.log("tasks of user "+id+" : "+JSON.stringify(data)); 
+          console.log("userwithtasks of user "+id+" : "+JSON.stringify(data)); 
           }),
           catchError((err)=>{
            throw err;
@@ -45,33 +47,36 @@ export class UserService {
        );
   }
 
+  
+  private notifySubject = new Subject<void>();
+  notify$ = this.notifySubject.asObservable();
+ 
   public   addTask(task: any):Observable<any> {
-        let response=  this.http.post( environment.API_URL+"/ToDo/task/", task);
+        let response=  this.http.post( environment.API_URL+"/task/", task);
         this.notifySubject.next();
         return response;
   }
 
   public addUser(user:any):Observable<any>{
-      let response = this.http.post(environment.API_URL+"/ToDo/user/",user);
+      let response = this.http.post(environment.API_URL+"/user/",user);
         this.notifySubject.next();
         return response;
   }
 
   public deleteTask(taskId:number):Observable<any>{
-      return this.http.delete(environment.API_URL+"/ToDo/task/"+taskId);
+    let response =  this.http.delete(environment.API_URL+"/task/"+taskId);
+    this.notifySubject.next();
+    return response;
   }
 
-   private notifySubject = new Subject<void>();
-   notify$ = this.notifySubject.asObservable();
-
    public deleteUser(userId:number):Observable<any>{
-      let response = this.http.delete(environment.API_URL+"/ToDo/user?userId="+userId);
+      let response = this.http.delete(environment.API_URL+"/user?userId="+userId);
       this.notifySubject.next();
       return response;
    }
 
    updateTaskStatus(taskId:number,updatedTaskStatus:number){
-    let response= this.http.put(environment.API_URL+"/ToDo/task/"+taskId+"?updatedStatus="+updatedTaskStatus,null);
+    let response= this.http.put(environment.API_URL+"/task/"+taskId+"?updatedStatus="+updatedTaskStatus,null);
     return response;           
    }
 }

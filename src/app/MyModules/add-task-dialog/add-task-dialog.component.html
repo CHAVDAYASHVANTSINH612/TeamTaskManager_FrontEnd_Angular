@@ -1,27 +1,19 @@
 <h1>Add Task</h1>
 <form [formGroup]="addTaskForm" (ngSubmit)="addTaskSubmit()">
   <mat-form-field>
-    <input matInput placeholder="Task Title" formControlName="task_title" />
-    <mat-error *ngIf="addTaskForm.controls['task_title'].hasError('required')"
-      >Task Title is required</mat-error
-    >
+    <input matInput placeholder="Task Title" formControlName="title" />
+    <mat-error *ngIf="addTaskForm.controls['title'].hasError('required')">Task Title is required</mat-error>
   </mat-form-field>
   <br />
   <mat-form-field>
-    <input matInput placeholder="Task Content" formControlName="task_content" />
+    <input matInput placeholder="Task Content" formControlName="content" />
   </mat-form-field>
 
-  <input type="number" formControlName="task_user_id" style="display: none" />
+  <input type="number" formControlName="userId" style="display: none" />
 
   <mat-dialog-actions>
     <button mat-button mat-dialog-close>Cancel</button>
-    <button
-      mat-button
-      color="primary"
-      type="submit"
-      [disabled]="addTaskForm.invalid"
-      id="add-task-btn"
-    >
+    <button mat-button color="primary" type="submit" [disabled]="addTaskForm.invalid" id="add-task-btn">
       Add Task
     </button>
   </mat-dialog-actions>

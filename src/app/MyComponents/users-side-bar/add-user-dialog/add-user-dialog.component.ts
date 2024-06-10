@@ -18,12 +18,14 @@ export class AddUserDialogComponent {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.addUserForm = this.formBuilder.group({
-      user_name: [null, Validators.required],
-      user_type_id: [null, Validators.required]
+      name: [null, Validators.required],
+      userTypeId: [null, Validators.required]
     });
   }
   async onSubmit(): Promise<void> {
     if (this.addUserForm.valid) {
+      console.log(this.addUserForm.value);
+      
       
       await this._userService.addUser(this.addUserForm.value).subscribe(
         () => {
@@ -31,7 +33,7 @@ export class AddUserDialogComponent {
         },
         (error) => {
           console.error('Error adding User:', error.error);
-          alert(error.error);
+          console.error(error.error);
         }
       );
       this.dialogRef.close(this.addUserForm.value);

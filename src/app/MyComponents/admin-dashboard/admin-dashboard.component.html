@@ -1,17 +1,15 @@
-
 <h2 class="card-header mt-4"> User List</h2>
-       <div *ngIf="loading" class="spinner-border text-primary" id="loading" role="status">
-        <span class="sr-only">Loading...</span>
-      </div>
+<div *ngIf="loading" class="spinner-border text-primary" id="loading" role="status">
+  <span class="sr-only">Loading...</span>
+</div>
 <ng-container *ngIf=" userList!==undefined">
   <div id="content">
-        <div *ngFor="let user of userList"  class="card-item">
-              <div class="card"  *ngIf="user.user_type_id!==1">
-              {{user.user_name}}
-              <i class="fa fa-trash delete-user-btn end-0" (click)="deleteUser(user.user_id)"></i>
-              </div>
-         </div>
+    <div *ngFor="let user of userList" class="card-item">
+      <div class="card" *ngIf="user.userTypeId!==1">
+        {{user.name}}
+        <i class="fa fa-trash delete-user-btn end-0" (click)="deleteUser(user.id,user.name)"></i>
+      </div>
+    </div>
   </div>
 
 </ng-container>
-

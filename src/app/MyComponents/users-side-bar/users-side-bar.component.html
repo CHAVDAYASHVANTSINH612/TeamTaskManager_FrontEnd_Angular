@@ -2,27 +2,22 @@
   + addUser
 </div>
 
-<div
-  *ngIf="loading"
-  class="spinner-border text-primary"
-  id="loading"
-  role="status"
->
+<div *ngIf="loading" class="spinner-border text-primary" id="loading" role="status">
   <span class="sr-only">Loading...</span>
 </div>
 <ul *ngIf="!loading && userList.length > 0" id="user-list">
   <li *ngFor="let user of userList; let i = index">
-    <div *ngIf="user.user_type_id != 1; else AdminHere" id="user-container">
-      <a [routerLink]="['user', user.user_id]">
+    <div *ngIf="user.userTypeId != 1; else AdminHere" id="user-container">
+      <a [routerLink]="['/user', user.id]">
         <div>
-          <span>{{ i }}. </span>{{ user.user_name }}
+          <span>{{ i }}. </span>{{ user.name }}
         </div>
       </a>
     </div>
     <ng-template #AdminHere>
       <a routerLink="admin">
         <div>
-          {{ user.user_name }} <span class="admin-lable-btn">Admin</span>
+          {{ user.name }} <span class="admin-lable-btn">Admin</span>
         </div>
       </a>
     </ng-template>

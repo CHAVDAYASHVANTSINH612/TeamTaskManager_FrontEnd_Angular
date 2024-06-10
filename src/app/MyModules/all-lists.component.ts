@@ -55,7 +55,7 @@ export class AllListsComponent  {
     async openAddTaskDialog(){
       const dialogRef = this.dialog.open(AddTaskDialogComponent, {
         width: '600px',
-        data: { user_id:this.user.user_id }
+        data: { id:this.user.id }
       });
       dialogRef.afterClosed().subscribe(result => {
         console.log('The dialog was closed', result);
@@ -71,21 +71,22 @@ export class AllListsComponent  {
       (await this._userService.getUserWithTasks(this.id)).subscribe( 
         (data:User)=>{
          try{
-              for(let task of data.tasksList ){
+         console.log(" data.taskList :  "+data.taskList[0]?.title);
+              for(let task of data.taskList ){
                        this.allTaskList.push(task);
-                       if(task.task_status_id===1){
+                       if(task.taskStatusId==1){
                           this.ToDoTaskList.push(task);
                        }
-                       else if(task.task_status_id==2){
+                       else if(task.taskStatusId==2){
                           this.InProgressTaskList.push(task);
                        }
-                       else if(task.task_status_id==3){
+                       else if(task.taskStatusId==3){
                             this.DoneTaskList.push(task);
                        }
               }
           this.user=data; 
           this.loading=false;  
-          console.log(this.user);
+          console.log(this.allTaskList);
         } 
         catch (error) 
          {
@@ -94,7 +95,8 @@ export class AllListsComponent  {
          }
     },
     (error)=>{
-      alert(error.error);
+      // alert(error.error);
+       console.error(error);
       this.loading=false;
       this.errorMessage=error.errorMessage;
     }
@@ -109,7 +111,7 @@ export class AllListsComponent  {
                    this.errorMessage=error.error;
                   }
       )
-      this.localGetUserWithTask();
+      // this.localGetUserWithTask();
     }
 
     localUpdateTaskStatus(taskId:number,updatedStatusId:number){

@@ -17,12 +17,12 @@ export class AddTaskDialogComponent {
       private _userService:UserService,
       public dialogRef: MatDialogRef<AddTaskDialogComponent>,
       @Inject(MAT_DIALOG_DATA) public data: any)
-      {  console.log(data);
+      {  console.log("from addTaskDialog.ts : "+data.toString());
       
         this.addTaskForm = this.formBuilder.group({
-          task_title: [null, Validators.required],
-          task_content: [null],
-          task_user_id: [this.data.user_id]
+          title: [null, Validators.required],
+          content: [null],
+          userId: [this.data.id]
         });
       }
 

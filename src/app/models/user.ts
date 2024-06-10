@@ -1,9 +1,9 @@
 import { Tasks } from "../models/tasks";
 
 export class User {
-    public user_id!:number;
-    public user_name!:string;
-    public user_type_id!:number;
-    public user_type!:string;
-    public tasksList!:Tasks[];
+    public id!:number;
+    public name!:string;
+    public userTypeId!:number;
+    public userType!:string;
+    public taskList!:Tasks[];
 }

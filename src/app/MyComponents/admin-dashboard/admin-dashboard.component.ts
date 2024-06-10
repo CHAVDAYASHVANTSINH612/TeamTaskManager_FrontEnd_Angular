@@ -41,8 +41,8 @@ export class AdminDashboardComponent {
       },1000);
   }
 
-  async deleteUser(userId:number ){
-    if(confirm("confirm that you want to delete User "+userId)){
+  async deleteUser(userId:number ,name:string){
+    if(confirm("confirm that you want to delete User "+name+" ?")){
       await this._userService.deleteUser(userId).subscribe(
       (result)=>{
          console.log("user deleted "+result);

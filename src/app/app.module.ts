@@ -21,6 +21,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
 import { MatSelectModule } from '@angular/material/select';
 import { AddUserDialogComponent } from './MyComponents/users-side-bar/add-user-dialog/add-user-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { MatDialogModule } from '@angular/material/dialog';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    RouterModule,
     HttpClientModule,
      FormsModule,
      MatFormFieldModule,
